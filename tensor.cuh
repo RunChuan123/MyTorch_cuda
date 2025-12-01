@@ -11,6 +11,7 @@
 
 #include "Type.cuh"
 #include "TensorNode.cuh"
+#include "TensorStorage.cuh"
 
 
 static inline std::atomic<long> GLOBAL_TENSOR_ID = 0;
@@ -18,25 +19,11 @@ static inline std::atomic<long> GLOBAL_TENSOR_ID = 0;
 
 // #define GPU_TO_CPU_WITHOUT_FREE_GPU
 
+
 class Tensor{
 public:
-    void* data_;
-    void* grad_;
 
-    std::vector<int> shape_;
-    std::vector<int> stride_;
-
-    int ndim_;
-    std::string name_;
-    mutable int version_;
-    bool grad_accumulated = false;
-    
-
-    // 展平后的数据总量大小
-    int size_;
-    DType dtype_;
-    bool requires_grad_;
-
+    std::shared_ptr<TensorStorage> storage_;
     std::shared_ptr<TensorNode> grad_fn_;
 
 public:
@@ -45,7 +32,13 @@ public:
     template<typename T>
     Tensor(const std::vector<T>& host_data,DType dtype,bool requires_grad=true,std::string init = "none");
 
-    std::string name()const {return name_;}
+    std::string name()const {return storage_->name_;}
+
+    long long size()const {return storage_->size_;}
+
+    DType dtype() const {return storage_->dtype_;}
+
+    const std::vector<int>& shape() const{return storage_->shape_;}
 
 
     void zero_grad();
@@ -68,7 +61,7 @@ public:
     void uniform_(float from,float to);
     void normal_(float mean,float std);
     void zeros();
-    void bump_version(){version_++;}
+    void bump_version(){storage_->version_++;}
 
     Tensor operator+(const Tensor& other)const;
     Tensor operator*(const Tensor& other)const;

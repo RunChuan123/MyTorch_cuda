@@ -1,27 +1,27 @@
 [
 {
-  "directory": "/root/autodl-tmp/mytorch/build",
-  "command": "/usr/local/cuda/bin/nvcc -forward-unknown-to-host-compiler  -I/root/autodl-tmp/mytorch -isystem=/usr/local/cuda/include  -G -O0 -g --generate-code=arch=compute_52,code=[compute_52,sm_52] -x cu -c /root/autodl-tmp/mytorch/main.cu -o CMakeFiles/main.dir/main.cu.o",
-  "file": "/root/autodl-tmp/mytorch/main.cu"
+  "directory": "/root/autodl-tmp/MyTorch_cuda/build",
+  "command": "/usr/local/cuda/bin/nvcc -forward-unknown-to-host-compiler  -I/root/autodl-tmp/MyTorch_cuda -isystem=/usr/local/cuda/include  -G -g -g --generate-code=arch=compute_52,code=[compute_52,sm_52] -x cu -c /root/autodl-tmp/MyTorch_cuda/main.cu -o CMakeFiles/main.dir/main.cu.o",
+  "file": "/root/autodl-tmp/MyTorch_cuda/main.cu"
 },
 {
-  "directory": "/root/autodl-tmp/mytorch/build",
-  "command": "/usr/bin/g++  -I/root/autodl-tmp/mytorch -isystem /usr/local/cuda/include -g -o CMakeFiles/main.dir/rand.cpp.o -c /root/autodl-tmp/mytorch/rand.cpp",
-  "file": "/root/autodl-tmp/mytorch/rand.cpp"
+  "directory": "/root/autodl-tmp/MyTorch_cuda/build",
+  "command": "/usr/bin/g++  -I/root/autodl-tmp/MyTorch_cuda -isystem /usr/local/cuda/include -g -o CMakeFiles/main.dir/rand.cpp.o -c /root/autodl-tmp/MyTorch_cuda/rand.cpp",
+  "file": "/root/autodl-tmp/MyTorch_cuda/rand.cpp"
 },
 {
-  "directory": "/root/autodl-tmp/mytorch/build",
-  "command": "/usr/local/cuda/bin/nvcc -forward-unknown-to-host-compiler  -I/root/autodl-tmp/mytorch -isystem=/usr/local/cuda/include  -G -O0 -g --generate-code=arch=compute_52,code=[compute_52,sm_52] -x cu -c /root/autodl-tmp/mytorch/tensor.cu -o CMakeFiles/main.dir/tensor.cu.o",
-  "file": "/root/autodl-tmp/mytorch/tensor.cu"
+  "directory": "/root/autodl-tmp/MyTorch_cuda/build",
+  "command": "/usr/local/cuda/bin/nvcc -forward-unknown-to-host-compiler  -I/root/autodl-tmp/MyTorch_cuda -isystem=/usr/local/cuda/include  -G -g -g --generate-code=arch=compute_52,code=[compute_52,sm_52] -x cu -c /root/autodl-tmp/MyTorch_cuda/tensor.cu -o CMakeFiles/main.dir/tensor.cu.o",
+  "file": "/root/autodl-tmp/MyTorch_cuda/tensor.cu"
 },
 {
-  "directory": "/root/autodl-tmp/mytorch/build",
-  "command": "/usr/local/cuda/bin/nvcc -forward-unknown-to-host-compiler  -I/root/autodl-tmp/mytorch -isystem=/usr/local/cuda/include  -G -O0 -g --generate-code=arch=compute_52,code=[compute_52,sm_52] -x cu -c /root/autodl-tmp/mytorch/ops/add.cu -o CMakeFiles/main.dir/ops/add.cu.o",
-  "file": "/root/autodl-tmp/mytorch/ops/add.cu"
+  "directory": "/root/autodl-tmp/MyTorch_cuda/build",
+  "command": "/usr/local/cuda/bin/nvcc -forward-unknown-to-host-compiler  -I/root/autodl-tmp/MyTorch_cuda -isystem=/usr/local/cuda/include  -G -g -g --generate-code=arch=compute_52,code=[compute_52,sm_52] -x cu -c /root/autodl-tmp/MyTorch_cuda/ops/add.cu -o CMakeFiles/main.dir/ops/add.cu.o",
+  "file": "/root/autodl-tmp/MyTorch_cuda/ops/add.cu"
 },
 {
-  "directory": "/root/autodl-tmp/mytorch/build",
-  "command": "/usr/local/cuda/bin/nvcc -forward-unknown-to-host-compiler  -I/root/autodl-tmp/mytorch -isystem=/usr/local/cuda/include  -G -O0 -g --generate-code=arch=compute_52,code=[compute_52,sm_52] -x cu -c /root/autodl-tmp/mytorch/ops/mul.cu -o CMakeFiles/main.dir/ops/mul.cu.o",
-  "file": "/root/autodl-tmp/mytorch/ops/mul.cu"
+  "directory": "/root/autodl-tmp/MyTorch_cuda/build",
+  "command": "/usr/local/cuda/bin/nvcc -forward-unknown-to-host-compiler  -I/root/autodl-tmp/MyTorch_cuda -isystem=/usr/local/cuda/include  -G -g -g --generate-code=arch=compute_52,code=[compute_52,sm_52] -x cu -c /root/autodl-tmp/MyTorch_cuda/ops/mul.cu -o CMakeFiles/main.dir/ops/mul.cu.o",
+  "file": "/root/autodl-tmp/MyTorch_cuda/ops/mul.cu"
 }
 ]

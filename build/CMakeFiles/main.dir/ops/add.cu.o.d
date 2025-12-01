@@ -1,4 +1,4 @@
-CMakeFiles/main.dir/ops/add.cu.o : /root/autodl-tmp/mytorch/ops/add.cu \
+CMakeFiles/main.dir/ops/add.cu.o : /root/autodl-tmp/MyTorch_cuda/ops/add.cu \
     /usr/include/stdc-predef.h \
     /usr/local/cuda/include/cuda_runtime.h \
     /usr/local/cuda/include/crt/host_config.h \
@@ -180,8 +180,8 @@ CMakeFiles/main.dir/ops/add.cu.o : /root/autodl-tmp/mytorch/ops/add.cu \
     /usr/include/c++/11/utility \
     /usr/include/c++/11/bits/stl_relops.h \
     /usr/include/c++/11/initializer_list \
-    /root/autodl-tmp/mytorch/ops/add.cuh \
-    /root/autodl-tmp/mytorch/ops/../tensor.cuh \
+    /root/autodl-tmp/MyTorch_cuda/ops/add.cuh \
+    /root/autodl-tmp/MyTorch_cuda/ops/../tensor.cuh \
     /usr/include/c++/11/memory \
     /usr/include/c++/11/bits/allocator.h \
     /usr/include/x86_64-linux-gnu/c++/11/bits/c++allocator.h \
@@ -273,8 +273,8 @@ CMakeFiles/main.dir/ops/add.cu.o : /root/autodl-tmp/mytorch/ops/add.cu \
     /usr/include/c++/11/bits/charconv.h \
     /usr/include/c++/11/bits/basic_string.tcc \
     /usr/include/c++/11/atomic \
-    /root/autodl-tmp/mytorch/ops/../rand.h \
-    /root/autodl-tmp/mytorch/ops/../Type.cuh \
+    /root/autodl-tmp/MyTorch_cuda/ops/../rand.h \
+    /root/autodl-tmp/MyTorch_cuda/ops/../Type.cuh \
     /usr/local/cuda/include/cuda_fp16.h \
     /usr/local/cuda/include/nv/target \
     /usr/local/cuda/include/nv/detail/__target_macros \
@@ -306,7 +306,7 @@ CMakeFiles/main.dir/ops/add.cu.o : /root/autodl-tmp/mytorch/ops/add.cu \
     /usr/include/c++/11/bits/ostream.tcc \
     /usr/include/c++/11/istream \
     /usr/include/c++/11/bits/istream.tcc \
-    /root/autodl-tmp/mytorch/ops/../TensorNode.cuh \
+    /root/autodl-tmp/MyTorch_cuda/ops/../TensorNode.cuh \
     /usr/include/c++/11/vector \
     /usr/include/c++/11/bits/stl_vector.h \
     /usr/include/c++/11/bits/stl_bvector.h \
@@ -326,5 +326,6 @@ CMakeFiles/main.dir/ops/add.cu.o : /root/autodl-tmp/mytorch/ops/add.cu \
     /usr/include/c++/11/bits/uniform_int_dist.h \
     /usr/include/c++/11/unordered_set \
     /usr/include/c++/11/bits/unordered_set.h \
-    /root/autodl-tmp/mytorch/ops/../common.cuh \
-    /root/autodl-tmp/mytorch/ops/../utils.cuh
+    /root/autodl-tmp/MyTorch_cuda/ops/../TensorStorage.cuh \
+    /root/autodl-tmp/MyTorch_cuda/ops/../common.cuh \
+    /root/autodl-tmp/MyTorch_cuda/ops/../utils.cuh

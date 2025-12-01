@@ -4,9 +4,13 @@
 #include <string>
 #include <unordered_map>
 #include <unordered_set>
+#include <memory>
+
 
 
 class Tensor;
+class TensorStorage;
+
 
 enum class OpType{
     None,
@@ -35,12 +39,14 @@ public:
     Tensor* owner = nullptr;  // 当前节点对应的Tensor
 
     std::unordered_map<std::string,std::vector<int>> int_args;
+    std::unordered_map<std::string,long long > ll_args;
     std::unordered_map<std::string,float> float_args;
     std::unordered_map<std::string,bool> bool_args;
 
-    std::unordered_map<std::string,Tensor*> tensor_args;
+    std::unordered_map<std::string,std::weak_ptr<TensorStorage>> tensor_args;
 
-    TensorNode(Tensor* t):owner(t){}
+    TensorNode() = default;
+    TensorNode(Tensor* t) : owner(t) {}
 };
 
 

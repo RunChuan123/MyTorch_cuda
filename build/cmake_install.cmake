@@ -1,4 +1,4 @@
-# Install script for directory: /root/autodl-tmp/mytorch
+# Install script for directory: /root/autodl-tmp/MyTorch_cuda
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -50,5 +50,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/root/autodl-tmp/mytorch/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/root/autodl-tmp/MyTorch_cuda/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

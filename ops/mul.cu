@@ -65,40 +65,40 @@ __global__ void mul128_backward_kernel(
 }
 
 Tensor mul(const Tensor& A,const Tensor& B){
-    assert(A.size_ == B.size_);
-    DType dtype = A.dtype_;
+    assert(A.storage_->size_ == B.storage_->size_);
+    DType dtype = A.storage_->dtype_;
 
-    Tensor out(A.shape_,dtype,A.requires_grad_ || B.requires_grad_);
+    Tensor out(A.storage_->shape_,dtype,A.storage_->requires_grad_ || B.storage_->requires_grad_);
     DISPATCH_DTYPE_AND_PACK(dtype,scalar_t,vec_t,{
         int pack = vec_t::size;
         int threads = 256;
-        int blocks = CEIL_DIV(A.size_,pack*threads);
+        int blocks = CEIL_DIV(A.storage_->size_,pack*threads);
         mul128_kernel<scalar_t><<<blocks,threads>>>(
-            (scalar_t*)A.data_,
-            (scalar_t*)B.data_,
-            (scalar_t*)out.data_,
-            A.size_
+            (scalar_t*)A.storage_->data_,
+            (scalar_t*)B.storage_->data_,
+            (scalar_t*)out.storage_->data_,
+            A.storage_->size_
         );
     });
-    if(out.requires_grad_){
+    if(out.storage_->requires_grad_){
         out.grad_fn_->parents = {const_cast<Tensor*>(&A),const_cast<Tensor*>(&B)};
         out.grad_fn_->op = OpType::Mul;
-        out.grad_fn_->int_args["size"] = {A.size_};
-        out.grad_fn_->tensor_args["A_ref"] = (Tensor*)&A;
-        out.grad_fn_->tensor_args["B_ref"] = (Tensor*)&B;
-        out.grad_fn_->int_args["A_version"] = {(int)A.version_};
-        out.grad_fn_->int_args["B_version"] = {(int)B.version_};
-        out.grad_fn_->backward_fn = [&,dtype,size=A.size_](){
+        out.grad_fn_->ll_args["size"] = {A.storage_->size_};
+        out.grad_fn_->tensor_args["A_ref"] = A.storage_;
+        out.grad_fn_->tensor_args["B_ref"] = B.storage_;
+        out.grad_fn_->int_args["A_version"] = {(int)A.storage_->version_};
+        out.grad_fn_->int_args["B_version"] = {(int)B.storage_->version_};
+        out.grad_fn_->backward_fn = [&,dtype,size=A.storage_->size_](){
         DISPATCH_DTYPE_AND_PACK(dtype,scalar_t,vec_t,{
             int pack = vec_t::size;
             int threads = 256;
-            int blocks = CEIL_DIV(A.size_,pack*threads);
+            int blocks = CEIL_DIV(A.storage_->size_,pack*threads);
             mul128_backward_kernel<scalar_t><<<blocks,threads>>>(
-            (scalar_t*)A.grad_,
-            (scalar_t*)B.grad_,
-            (scalar_t*)out.grad_,
-            (scalar_t*)A.data_,
-            (scalar_t*)B.data_,
+            (scalar_t*)A.storage_->grad_,
+            (scalar_t*)B.storage_->grad_,
+            (scalar_t*)out.storage_->grad_,
+            (scalar_t*)A.storage_->data_,
+            (scalar_t*)B.storage_->data_,
             size
             );
             });

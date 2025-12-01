@@ -1,5 +1,5 @@
-CMakeFiles/main.dir/rand.cpp.o: /root/autodl-tmp/mytorch/rand.cpp \
- /usr/include/stdc-predef.h /root/autodl-tmp/mytorch/rand.h \
+CMakeFiles/main.dir/rand.cpp.o: /root/autodl-tmp/MyTorch_cuda/rand.cpp \
+ /usr/include/stdc-predef.h /root/autodl-tmp/MyTorch_cuda/rand.h \
  /usr/include/c++/11/math.h /usr/include/c++/11/cmath \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/os_defines.h \

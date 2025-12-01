@@ -5,13 +5,13 @@
 # compile CXX with /usr/bin/g++
 CUDA_DEFINES = 
 
-CUDA_INCLUDES = -I/root/autodl-tmp/mytorch -isystem=/usr/local/cuda/include
+CUDA_INCLUDES = -I/root/autodl-tmp/MyTorch_cuda -isystem=/usr/local/cuda/include
 
-CUDA_FLAGS =  -G -O0 -g --generate-code=arch=compute_52,code=[compute_52,sm_52]
+CUDA_FLAGS =  -G -g -g --generate-code=arch=compute_52,code=[compute_52,sm_52]
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/root/autodl-tmp/mytorch -isystem /usr/local/cuda/include
+CXX_INCLUDES = -I/root/autodl-tmp/MyTorch_cuda -isystem /usr/local/cuda/include
 
 CXX_FLAGS = -g
 

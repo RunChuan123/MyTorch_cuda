@@ -8,11 +8,11 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/root/autodl-tmp/mytorch/main.cu" "CMakeFiles/main.dir/main.cu.o" "gcc" "CMakeFiles/main.dir/main.cu.o.d"
-  "/root/autodl-tmp/mytorch/ops/add.cu" "CMakeFiles/main.dir/ops/add.cu.o" "gcc" "CMakeFiles/main.dir/ops/add.cu.o.d"
-  "/root/autodl-tmp/mytorch/ops/mul.cu" "CMakeFiles/main.dir/ops/mul.cu.o" "gcc" "CMakeFiles/main.dir/ops/mul.cu.o.d"
-  "/root/autodl-tmp/mytorch/tensor.cu" "CMakeFiles/main.dir/tensor.cu.o" "gcc" "CMakeFiles/main.dir/tensor.cu.o.d"
-  "/root/autodl-tmp/mytorch/rand.cpp" "CMakeFiles/main.dir/rand.cpp.o" "gcc" "CMakeFiles/main.dir/rand.cpp.o.d"
+  "/root/autodl-tmp/MyTorch_cuda/main.cu" "CMakeFiles/main.dir/main.cu.o" "gcc" "CMakeFiles/main.dir/main.cu.o.d"
+  "/root/autodl-tmp/MyTorch_cuda/ops/add.cu" "CMakeFiles/main.dir/ops/add.cu.o" "gcc" "CMakeFiles/main.dir/ops/add.cu.o.d"
+  "/root/autodl-tmp/MyTorch_cuda/ops/mul.cu" "CMakeFiles/main.dir/ops/mul.cu.o" "gcc" "CMakeFiles/main.dir/ops/mul.cu.o.d"
+  "/root/autodl-tmp/MyTorch_cuda/tensor.cu" "CMakeFiles/main.dir/tensor.cu.o" "gcc" "CMakeFiles/main.dir/tensor.cu.o.d"
+  "/root/autodl-tmp/MyTorch_cuda/rand.cpp" "CMakeFiles/main.dir/rand.cpp.o" "gcc" "CMakeFiles/main.dir/rand.cpp.o.d"
   )
 
 # Targets to which this target links.

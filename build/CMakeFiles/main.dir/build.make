@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /root/autodl-tmp/mytorch
+CMAKE_SOURCE_DIR = /root/autodl-tmp/MyTorch_cuda
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /root/autodl-tmp/mytorch/build
+CMAKE_BINARY_DIR = /root/autodl-tmp/MyTorch_cuda/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/main.dir/depend.make
@@ -72,8 +72,8 @@ include CMakeFiles/main.dir/flags.make
 CMakeFiles/main.dir/main.cu.o: CMakeFiles/main.dir/flags.make
 CMakeFiles/main.dir/main.cu.o: ../main.cu
 CMakeFiles/main.dir/main.cu.o: CMakeFiles/main.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/autodl-tmp/mytorch/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CUDA object CMakeFiles/main.dir/main.cu.o"
-	/usr/local/cuda/bin/nvcc -forward-unknown-to-host-compiler $(CUDA_DEFINES) $(CUDA_INCLUDES) $(CUDA_FLAGS) -MD -MT CMakeFiles/main.dir/main.cu.o -MF CMakeFiles/main.dir/main.cu.o.d -x cu -c /root/autodl-tmp/mytorch/main.cu -o CMakeFiles/main.dir/main.cu.o
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/autodl-tmp/MyTorch_cuda/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CUDA object CMakeFiles/main.dir/main.cu.o"
+	/usr/local/cuda/bin/nvcc -forward-unknown-to-host-compiler $(CUDA_DEFINES) $(CUDA_INCLUDES) $(CUDA_FLAGS) -MD -MT CMakeFiles/main.dir/main.cu.o -MF CMakeFiles/main.dir/main.cu.o.d -x cu -c /root/autodl-tmp/MyTorch_cuda/main.cu -o CMakeFiles/main.dir/main.cu.o
 
 CMakeFiles/main.dir/main.cu.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CUDA source to CMakeFiles/main.dir/main.cu.i"
@@ -86,22 +86,22 @@ CMakeFiles/main.dir/main.cu.s: cmake_force
 CMakeFiles/main.dir/rand.cpp.o: CMakeFiles/main.dir/flags.make
 CMakeFiles/main.dir/rand.cpp.o: ../rand.cpp
 CMakeFiles/main.dir/rand.cpp.o: CMakeFiles/main.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/autodl-tmp/mytorch/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/main.dir/rand.cpp.o"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main.dir/rand.cpp.o -MF CMakeFiles/main.dir/rand.cpp.o.d -o CMakeFiles/main.dir/rand.cpp.o -c /root/autodl-tmp/mytorch/rand.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/autodl-tmp/MyTorch_cuda/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/main.dir/rand.cpp.o"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main.dir/rand.cpp.o -MF CMakeFiles/main.dir/rand.cpp.o.d -o CMakeFiles/main.dir/rand.cpp.o -c /root/autodl-tmp/MyTorch_cuda/rand.cpp
 
 CMakeFiles/main.dir/rand.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/main.dir/rand.cpp.i"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /root/autodl-tmp/mytorch/rand.cpp > CMakeFiles/main.dir/rand.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /root/autodl-tmp/MyTorch_cuda/rand.cpp > CMakeFiles/main.dir/rand.cpp.i
 
 CMakeFiles/main.dir/rand.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/main.dir/rand.cpp.s"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /root/autodl-tmp/mytorch/rand.cpp -o CMakeFiles/main.dir/rand.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /root/autodl-tmp/MyTorch_cuda/rand.cpp -o CMakeFiles/main.dir/rand.cpp.s
 
 CMakeFiles/main.dir/tensor.cu.o: CMakeFiles/main.dir/flags.make
 CMakeFiles/main.dir/tensor.cu.o: ../tensor.cu
 CMakeFiles/main.dir/tensor.cu.o: CMakeFiles/main.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/autodl-tmp/mytorch/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CUDA object CMakeFiles/main.dir/tensor.cu.o"
-	/usr/local/cuda/bin/nvcc -forward-unknown-to-host-compiler $(CUDA_DEFINES) $(CUDA_INCLUDES) $(CUDA_FLAGS) -MD -MT CMakeFiles/main.dir/tensor.cu.o -MF CMakeFiles/main.dir/tensor.cu.o.d -x cu -c /root/autodl-tmp/mytorch/tensor.cu -o CMakeFiles/main.dir/tensor.cu.o
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/autodl-tmp/MyTorch_cuda/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CUDA object CMakeFiles/main.dir/tensor.cu.o"
+	/usr/local/cuda/bin/nvcc -forward-unknown-to-host-compiler $(CUDA_DEFINES) $(CUDA_INCLUDES) $(CUDA_FLAGS) -MD -MT CMakeFiles/main.dir/tensor.cu.o -MF CMakeFiles/main.dir/tensor.cu.o.d -x cu -c /root/autodl-tmp/MyTorch_cuda/tensor.cu -o CMakeFiles/main.dir/tensor.cu.o
 
 CMakeFiles/main.dir/tensor.cu.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CUDA source to CMakeFiles/main.dir/tensor.cu.i"
@@ -114,8 +114,8 @@ CMakeFiles/main.dir/tensor.cu.s: cmake_force
 CMakeFiles/main.dir/ops/add.cu.o: CMakeFiles/main.dir/flags.make
 CMakeFiles/main.dir/ops/add.cu.o: ../ops/add.cu
 CMakeFiles/main.dir/ops/add.cu.o: CMakeFiles/main.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/autodl-tmp/mytorch/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CUDA object CMakeFiles/main.dir/ops/add.cu.o"
-	/usr/local/cuda/bin/nvcc -forward-unknown-to-host-compiler $(CUDA_DEFINES) $(CUDA_INCLUDES) $(CUDA_FLAGS) -MD -MT CMakeFiles/main.dir/ops/add.cu.o -MF CMakeFiles/main.dir/ops/add.cu.o.d -x cu -c /root/autodl-tmp/mytorch/ops/add.cu -o CMakeFiles/main.dir/ops/add.cu.o
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/autodl-tmp/MyTorch_cuda/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CUDA object CMakeFiles/main.dir/ops/add.cu.o"
+	/usr/local/cuda/bin/nvcc -forward-unknown-to-host-compiler $(CUDA_DEFINES) $(CUDA_INCLUDES) $(CUDA_FLAGS) -MD -MT CMakeFiles/main.dir/ops/add.cu.o -MF CMakeFiles/main.dir/ops/add.cu.o.d -x cu -c /root/autodl-tmp/MyTorch_cuda/ops/add.cu -o CMakeFiles/main.dir/ops/add.cu.o
 
 CMakeFiles/main.dir/ops/add.cu.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CUDA source to CMakeFiles/main.dir/ops/add.cu.i"
@@ -128,8 +128,8 @@ CMakeFiles/main.dir/ops/add.cu.s: cmake_force
 CMakeFiles/main.dir/ops/mul.cu.o: CMakeFiles/main.dir/flags.make
 CMakeFiles/main.dir/ops/mul.cu.o: ../ops/mul.cu
 CMakeFiles/main.dir/ops/mul.cu.o: CMakeFiles/main.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/autodl-tmp/mytorch/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CUDA object CMakeFiles/main.dir/ops/mul.cu.o"
-	/usr/local/cuda/bin/nvcc -forward-unknown-to-host-compiler $(CUDA_DEFINES) $(CUDA_INCLUDES) $(CUDA_FLAGS) -MD -MT CMakeFiles/main.dir/ops/mul.cu.o -MF CMakeFiles/main.dir/ops/mul.cu.o.d -x cu -c /root/autodl-tmp/mytorch/ops/mul.cu -o CMakeFiles/main.dir/ops/mul.cu.o
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/autodl-tmp/MyTorch_cuda/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CUDA object CMakeFiles/main.dir/ops/mul.cu.o"
+	/usr/local/cuda/bin/nvcc -forward-unknown-to-host-compiler $(CUDA_DEFINES) $(CUDA_INCLUDES) $(CUDA_FLAGS) -MD -MT CMakeFiles/main.dir/ops/mul.cu.o -MF CMakeFiles/main.dir/ops/mul.cu.o.d -x cu -c /root/autodl-tmp/MyTorch_cuda/ops/mul.cu -o CMakeFiles/main.dir/ops/mul.cu.o
 
 CMakeFiles/main.dir/ops/mul.cu.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CUDA source to CMakeFiles/main.dir/ops/mul.cu.i"
@@ -158,7 +158,7 @@ main: CMakeFiles/main.dir/ops/mul.cu.o
 main: CMakeFiles/main.dir/build.make
 main: /usr/local/cuda/lib64/libcudart.so
 main: CMakeFiles/main.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/root/autodl-tmp/mytorch/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable main"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/root/autodl-tmp/MyTorch_cuda/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable main"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/main.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -170,6 +170,6 @@ CMakeFiles/main.dir/clean:
 .PHONY : CMakeFiles/main.dir/clean
 
 CMakeFiles/main.dir/depend:
-	cd /root/autodl-tmp/mytorch/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /root/autodl-tmp/mytorch /root/autodl-tmp/mytorch /root/autodl-tmp/mytorch/build /root/autodl-tmp/mytorch/build /root/autodl-tmp/mytorch/build/CMakeFiles/main.dir/DependInfo.cmake --color=$(COLOR)
+	cd /root/autodl-tmp/MyTorch_cuda/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /root/autodl-tmp/MyTorch_cuda /root/autodl-tmp/MyTorch_cuda /root/autodl-tmp/MyTorch_cuda/build /root/autodl-tmp/MyTorch_cuda/build /root/autodl-tmp/MyTorch_cuda/build/CMakeFiles/main.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/main.dir/depend
 

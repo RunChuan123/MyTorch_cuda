@@ -9,18 +9,22 @@ static inline std::string generate_name(const std::string& prefix = "tensor"){
     return prefix + "_" + std::to_string(id);
 }
 
-Tensor::Tensor(const std::vector<int>& shape,DType dtype,bool requires_grad,std::string init):
-    shape_(shape),dtype_(dtype),requires_grad_(requires_grad)
+Tensor::Tensor(const std::vector<int>& shape,DType dtype,bool requires_grad,std::string init)
+    // :shape_(shape),dtype_(dtype),requires_grad_(requires_grad)
 {
-    name_ = generate_name();
-    ndim_ = shape_.size();
-    stride_ = compute_stride(shape_);
-    size_ = 1;
-    for(int dim: shape_) size_ *= dim;
+    storage_ = std::make_shared<TensorStorage>();
+    storage_->shape_ = shape;
+    storage_->dtype_ = dtype;
+    storage_->requires_grad_ = requires_grad;
+    storage_->name_ = generate_name();
+    storage_->ndim_ = storage_->shape_.size();
+    storage_->stride_ = compute_stride(storage_->shape_);
+    storage_->size_ = 1;
+    for(int dim: storage_->shape_) storage_->size_ *= dim;
 
-    size_t bytes = size_ * dtype_size(dtype_);
-    cudaMalloc(&data_,bytes);
-    grad_ = nullptr;
+    size_t bytes = storage_->size_ * dtype_size(storage_->dtype_);
+    cudaMalloc(&storage_->data_,bytes);
+    storage_->grad_ = nullptr;
     grad_fn_ = std::make_shared<TensorNode>(this);
     grad_fn_->is_leaf = true;
 
@@ -40,17 +44,21 @@ Tensor::Tensor(const std::vector<int>& shape,DType dtype,bool requires_grad,std:
 *  此函数将host_data构造为一维向量
 */
 template<typename T>
-Tensor::Tensor(const std::vector<T>& host_data,DType dtype,bool requires_grad,std::string init):
-    size_(host_data.size()),dtype_(dtype),requires_grad_(requires_grad)
+Tensor::Tensor(const std::vector<T>& host_data,DType dtype,bool requires_grad,std::string init)
+    // :size_(host_data.size()),dtype_(dtype),requires_grad_(requires_grad)
 {   
-    name_ = generate_name();
-    shape_ = {(int)size_};
-    ndim_ = 1;
+    storage_ = std::make_shared<TensorStorage>();
+    storage_->shape_ = {(int)host_data.size()};
+    storage_->dtype_ = dtype;
+    storage_->requires_grad_ = requires_grad;
+    storage_->name_ = generate_name();
+    storage_->shape_ = {(int)storage_->size_};
+    storage_->ndim_ = 1;
 
-    size_t bytes = size_ * dtype_size(dtype_);
-    cudaMalloc(&data_,bytes);
-    cudaMemcpy(data_,host_data.data(),bytes,cudaMemcpyHostToDevice);
-    grad_ = nullptr;
+    size_t bytes = storage_->size_ * dtype_size(storage_->dtype_);
+    cudaMalloc(&storage_->data_,bytes);
+    cudaMemcpy(storage_->data_,host_data.data(),bytes,cudaMemcpyHostToDevice);
+    storage_->grad_ = nullptr;
     grad_fn_ = std::make_shared<TensorNode>(this);
     grad_fn_->is_leaf = true;
     
@@ -74,31 +82,31 @@ Tensor Tensor::operator*(const Tensor& other) const{
 }
 
 void Tensor::zero_grad(){
-    assert(requires_grad_);
-    cudaMemset(grad_,0,size_ * dtype_size(dtype_));
+    assert(storage_->requires_grad_);
+    cudaMemset(storage_->grad_,0,storage_->size_ * dtype_size(storage_->dtype_));
 }
 
 void Tensor::ensure_grad(){
-    assert(requires_grad_);
-    if (grad_ == nullptr){
-        cudaMalloc(&grad_,size_*dtype_size(dtype_));
+    assert(storage_->requires_grad_);
+    if (storage_->grad_ == nullptr){
+        cudaMalloc(&storage_->grad_,storage_->size_*dtype_size(storage_->dtype_));
         // write_one_to_grad();
     }
 }
 
 void Tensor::write_one_to_grad() {
-    DISPATCH_DTYPE(dtype_, scalar_t, {
+    DISPATCH_DTYPE(storage_->dtype_, scalar_t, {
         scalar_t one = (scalar_t)1;
-        cudaMemcpy(grad_, &one, sizeof(scalar_t), cudaMemcpyHostToDevice);
+        cudaMemcpy(storage_->grad_, &one, sizeof(scalar_t), cudaMemcpyHostToDevice);
     });
 }
 
 
 // 递归调用backward
 void Tensor::backward(){
-    assert(size_ == 1  && "test if this message will print");
+    assert(storage_->size_ == 1  && "test if this message will print");
     
-    if(!requires_grad_) return;
+    if(!storage_->requires_grad_) return;
     
     ensure_grad();
     write_one_to_grad();
@@ -106,7 +114,7 @@ void Tensor::backward(){
     std::function<void(TensorNode*)> dfs = [&](TensorNode* fn){
         if(fn->backward_fn)fn->backward_fn();
         for(Tensor* p : fn-> parents){
-            if(p->requires_grad_){
+            if(p->storage_->requires_grad_){
                 p->ensure_grad();
                 dfs(p->grad_fn_.get());
             }
@@ -118,14 +126,14 @@ void Tensor::backward(){
 
 
 void Tensor::print(size_t size){
-    int need_size = size ? size : size_ ;
+    int need_size = size ? size : storage_->size_ ;
     std::cout << "Tensor(shape=[";
     auto cpu_data = cpu_as_double(need_size);
-    for (int i = 0; i < shape_.size(); i++) {
-        std::cout << shape_[i];
-        if (i + 1 < shape_.size()) std::cout << ",";
+    for (int i = 0; i < storage_->shape_.size(); i++) {
+        std::cout << storage_->shape_[i];
+        if (i + 1 < storage_->shape_.size()) std::cout << ",";
     }
-    std::cout << "], dtype=" << dtype_ << "):\n";
+    std::cout << "], dtype=" << storage_->dtype_ << "):\n";
 
 
     for (int i = 0; i < need_size; i++) {
@@ -136,10 +144,10 @@ void Tensor::print(size_t size){
 
 template<typename scalar_t>
 std::vector<scalar_t> _tensor_to_cpu(const Tensor* t,size_t size) {
-    std::vector<scalar_t> cpu_data(t->size_);
-    int need_move_size = size ? size : t->size_ ;
+    std::vector<scalar_t> cpu_data(t->storage_->size_);
+    int need_move_size = size ? size : t->storage_->size_ ;
     cudaMemcpy(cpu_data.data(),
-               t->data_,
+               t->storage_->data_,
                need_move_size * sizeof(scalar_t),
                cudaMemcpyDeviceToHost);
     return cpu_data;
@@ -148,11 +156,11 @@ std::vector<scalar_t> _tensor_to_cpu(const Tensor* t,size_t size) {
 
 std::vector<double> Tensor::cpu_as_double(size_t size)const {
     
-    int need_move_size = size ? size : size_ ;
+    int need_move_size = size ? size : storage_->size_ ;
     std::vector<double> out(need_move_size);
-    DISPATCH_DTYPE(dtype_, scalar_t, {
+    DISPATCH_DTYPE(storage_->dtype_, scalar_t, {
         std::vector<scalar_t> tmp(need_move_size);
-        cudaMemcpy(tmp.data(), data_, need_move_size * sizeof(scalar_t), cudaMemcpyDeviceToHost);
+        cudaMemcpy(tmp.data(), storage_->data_, need_move_size * sizeof(scalar_t), cudaMemcpyDeviceToHost);
         for (int i = 0; i < need_move_size; i++)
             out[i] = (double)tmp[i];
     });
@@ -160,47 +168,84 @@ std::vector<double> Tensor::cpu_as_double(size_t size)const {
 }
 
 void Tensor::gpu_copy_from(const void* host_data) {
-    cudaMemcpy(data_, host_data, size_ * dtype_size(dtype_), cudaMemcpyHostToDevice);
+    cudaMemcpy(storage_->data_, host_data, storage_->size_ * dtype_size(storage_->dtype_), cudaMemcpyHostToDevice);
 }
 
 
 void Tensor::uniform_(float from,float to){
-    DISPATCH_DTYPE(dtype_,scalar_t,{
-        std::vector<scalar_t> host(size_);
-        for(int i=0;i<size_;i++){
+    DISPATCH_DTYPE(storage_->dtype_,scalar_t,{
+        std::vector<scalar_t> host(storage_->size_);
+        for(int i=0;i<storage_->size_;i++){
             float r = randfloat32(&GLOBAL_RNG) * (to-from) + from;
             host[i] = (scalar_t)r;
         }
-        cudaMemcpy(data_,host.data(),size_ * sizeof(scalar_t),cudaMemcpyHostToDevice);
+        cudaMemcpy(storage_->data_,host.data(),storage_->size_ * sizeof(scalar_t),cudaMemcpyHostToDevice);
     });
 }
 
 void Tensor::normal_(float mean,float std){
-    DISPATCH_DTYPE(dtype_,scalar_t,{
-        std::vector<float> temp(size_);
-        std::vector<float> host(size_);
-        ::normal_(temp.data(),size_,mean,std,&GLOBAL_RNG);
-        for(int i=0;i<size_;i++){
+    DISPATCH_DTYPE(storage_->dtype_,scalar_t,{
+        std::vector<float> temp(storage_->size_);
+        std::vector<float> host(storage_->size_);
+        ::normal_(temp.data(),storage_->size_,mean,std,&GLOBAL_RNG);
+        for(int i=0;i<storage_->size_;i++){
             
             host[i] = (scalar_t)temp[i];
         }
-        cudaMemcpy(data_,host.data(),size_ * sizeof(scalar_t),cudaMemcpyHostToDevice);
+        cudaMemcpy(storage_->data_,host.data(),storage_->size_ * sizeof(scalar_t),cudaMemcpyHostToDevice);
     });
 }
 
 void Tensor::zeros(){
-    DISPATCH_DTYPE(dtype_,scalar_t,{
-        cudaMemset(data_,(scalar_t)0,size_ * sizeof(scalar_t));
+    DISPATCH_DTYPE(storage_->dtype_,scalar_t,{
+        cudaMemset(storage_->data_,(scalar_t)0,storage_->size_ * sizeof(scalar_t));
     });
 }
 
 
 #include <iostream>
-#include <string>
 #include <unordered_set>
 
 
 
+// static void dfs_node(const Tensor& t,
+//                      int depth,
+//                      std::unordered_set<const TensorNode*>& visited)
+// {
+//     TensorNode* node = t.grad_fn_.get();
+
+//     // 防止重复访问
+//     if (node && visited.count(node)) return;
+//     if (node) visited.insert(node);
+
+//     // 缩进
+//     std::string indent(depth * 4, ' ');
+
+//     // 打印当前节点
+//     std::cout << indent << "(" << t.name() << ") ";
+//     std::cout << "  shape=[";
+//     for (int i = 0; i < t.storage_->shape_.size(); i++){
+//         std::cout << t.storage_->shape_[i];
+//         if(i+1 < t.storage_->shape_.size()) std::cout << ",";
+//     }
+//     std::cout << "]  dtype=" << (int)t.storage_->dtype_;
+//     if(t.storage_->requires_grad_) std::cout << " requires_grad";
+//     std::cout << " v" << t.storage_->version_ << "\n";
+
+//     // 叶子就结束
+//     if (!node || node->is_leaf) return;
+
+//     // 继续遍历父节点
+//     for (const Tensor& p : node->parents)
+//         dfs_node(p, depth + 1, visited);
+// }
+
+// void print_graph(const Tensor& output) {
+//     std::unordered_set<const TensorNode*> visited;
+//     std::cout << "=== Autograd Graph ===\n";
+//     dfs_node(output, 0, visited);
+//     std::cout << "=======================\n";
+// }
 static void dfs(const Tensor* t,int depth,std::unordered_set<const Tensor*>& visited)
 {
     if(!t || visited.count(t))return;
@@ -209,15 +254,15 @@ static void dfs(const Tensor* t,int depth,std::unordered_set<const Tensor*>& vis
     std::string indent(depth * 4,' ');
     std::cout << indent << "(" << t->name() << ") ";
     std::cout << "   shape=[";
-    for (int i = 0; i < t->shape_.size(); i++){
-        std::cout << t->shape_[i];
-        if(i+1 < t->shape_.size()) std::cout << ",";
+    for (int i = 0; i < t->storage_->shape_.size(); i++){
+        std::cout << t->storage_->shape_[i];
+        if(i+1 < t->storage_->shape_.size()) std::cout << ",";
     }
     std::cout << "]";
 
-    std::cout << "  dtype=" << (int)t->dtype_;
-    if(t->requires_grad_) std::cout << "  requires_grad";
-    std::cout << "  v" << t->version_;
+    std::cout << "  dtype=" << (int)t->storage_->dtype_;
+    if(t->storage_->requires_grad_) std::cout << "  requires_grad";
+    std::cout << "  v" << t->storage_->version_;
     std::cout << std::endl;
 
     if(!t->grad_fn_) return;  // leaf节点没有parents

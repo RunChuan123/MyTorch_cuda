@@ -13,7 +13,7 @@ bool check_add( Tensor& A,  Tensor& B,  Tensor& out) {
     auto o = out.cpu_as_double();
 
     bool ok = true;
-    for (int i = 0; i < A.size_; i++) {
+    for (int i = 0; i < A.storage_->size_; i++) {
         double expected = a[i] + b[i];
         if (!almost_equal(o[i], expected)) {
             std::cout << "[ADD ERROR] idx " << i 
@@ -32,7 +32,7 @@ bool check_mul(const Tensor& A, const Tensor& B, const Tensor& out) {
     auto o = out.cpu_as_double();
 
     bool ok = true;
-    for (int i = 0; i < A.size_; i++) {
+    for (int i = 0; i < A.storage_->size_; i++) {
         double expected = a[i] * b[i];
         if (!almost_equal(o[i], expected)) {
             std::cout << "[MUL ERROR] idx " << i 
