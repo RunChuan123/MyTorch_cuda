@@ -1,0 +1,21 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build with nvcc",
+            "type": "shell",
+            "command": "/usr/local/cuda/bin/nvcc",
+            "args": [
+                "${workspaceFolder}/main.cu",
+                "-o",
+                "${workspaceFolder}/main",
+                "-std=c++17",
+                "-arch=sm_80" // 如果你的 GPU 是 A10/A100/3090，请改为对应 arch
+            ],
+            "group": "build",
+            "problemMatcher": [
+                "$gcc"
+            ]
+        }
+    ]
+}
