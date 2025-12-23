@@ -1,5 +1,5 @@
 #include "multiple.cuh"
-#include "src/utils/cuda_utils.cuh"
+#include "cuda_utils.cuh"
 
 template<typename T>
 __global__ void element_wise_mul128_kernel(const T* __restrict__ a,const T* __restrict__ b,T* __restrict__ out,int size){

@@ -4,8 +4,8 @@
 #include <string>
 #include <atomic>
 
-#include "src/utils/rand.h"
-#include "src/utils/type.cuh"
+#include "type.cuh"
+#include "rand.h"
 #include "tensorStorage.cuh"
 #include "tensorNode.cuh"
 

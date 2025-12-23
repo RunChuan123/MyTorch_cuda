@@ -1,7 +1,7 @@
 #include <vector>
 #include <string>
 
-#include "src/utils/type.cuh"
+#include "type.cuh"
 
 
 struct TensorStorage{

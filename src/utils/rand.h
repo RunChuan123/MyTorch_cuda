@@ -20,7 +20,7 @@ typedef struct {
     unsigned int MATRIX_A[2];
 } mt19937_state;
 
-void manual_seed(mt19937_state* state, unsigned int seed) {
+inline void manual_seed(mt19937_state* state, unsigned int seed) {
     state->MATRIX_A[0] = 0x0u;
     state->MATRIX_A[1] = 0x9908b0df;
     state->state_[0] = seed & 0xffffffff;
@@ -32,7 +32,7 @@ void manual_seed(mt19937_state* state, unsigned int seed) {
     state->next_ = 0;
 }
 
-void next_state(mt19937_state* state) {
+inline void next_state(mt19937_state* state) {
     state->left_ = MERSENNE_STATE_N;
     state->next_ = 0;
     unsigned int y, j;
@@ -48,7 +48,7 @@ void next_state(mt19937_state* state) {
     state->state_[MERSENNE_STATE_N - 1] = state->state_[MERSENNE_STATE_M - 1] ^ (y >> 1) ^ state->MATRIX_A[y & 0x1];
 }
 
-unsigned int randint32(mt19937_state* state) {
+inline unsigned int randint32(mt19937_state* state) {
     if (!state) return 0;
     if (state->MATRIX_A[0] != 0 || state->MATRIX_A[1] != 0x9908b0df) manual_seed(state, 5489); // auto-initialize
     if (--state->left_ <= 0) {
@@ -73,7 +73,7 @@ inline double randfloat64(mt19937_state* state) {
     return (randint64(state) & ((1ull << 53) - 1)) * (1.0 / (1ull << 53));
 }
 
-void uniform_(float* data, unsigned int numel, float from, float to, mt19937_state* state) {
+inline void uniform_(float* data, unsigned int numel, float from, float to, mt19937_state* state) {
     for (unsigned int t = 0; t < numel; t++) {
         data[t] = randfloat32(state) * (to - from) + from;
     }
@@ -81,7 +81,7 @@ void uniform_(float* data, unsigned int numel, float from, float to, mt19937_sta
 
 // Box-Muller transform: maps uniform random numbers to Gaussian distributed numbers
 // https://en.wikipedia.org/wiki/Box%E2%80%93Muller_transform
-void normal_fill_16(float* data, float mean, float std) {
+inline void normal_fill_16(float* data, float mean, float std) {
     #define EPSILONE 1e-12f
     for (unsigned int t = 0; t < 8; t++) {
         float u1 = 1 - data[t];
@@ -93,7 +93,7 @@ void normal_fill_16(float* data, float mean, float std) {
     }
 }
 
-void normal_fill(float* data, unsigned int numel, float mean, float std, mt19937_state* state) {
+inline void normal_fill(float* data, unsigned int numel, float mean, float std, mt19937_state* state) {
     for (unsigned int t = 0; t < numel; t++) {
         data[t] = randfloat32(state);
     }
@@ -110,7 +110,7 @@ void normal_fill(float* data, unsigned int numel, float mean, float std, mt19937
     }
 }
 
-void normal_(float* data, unsigned int numel, float mean, float std, mt19937_state* state) {
+inline void normal_(float* data, unsigned int numel, float mean, float std, mt19937_state* state) {
     #define EPSILONE 1e-12f
     if (numel >= 16) {
         normal_fill(data, numel, mean, std, state);
@@ -136,13 +136,13 @@ void normal_(float* data, unsigned int numel, float mean, float std, mt19937_sta
     }
 }
 
-void init_identity_permutation(int *data, int numel) {
+inline void init_identity_permutation(int *data, int numel) {
     for (int i = 0; i < numel; i++) {
         data[i] = i;
     }
 }
 
-void random_permutation(int* data, int numel, mt19937_state* state) {
+inline void random_permutation(int* data, int numel, mt19937_state* state) {
     for (int i = numel - 1; i > 0; i--) {
         // pick an index j in [0, i] with equal probability
         int j = randint32(state) % (i + 1);

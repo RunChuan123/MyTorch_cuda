@@ -1,10 +1,10 @@
 #include <iostream>
 
 #include "tensor.cuh"
-#include "ops/ops.cuh"
-#include "src/utils/util.h"
-#include "src/utils/cuda_utils.cuh"
-#include "src/utils/rand.h"
+// #include "ops.cuh"
+#include "util.h"
+#include "cuda_utils.cuh"
+#include "rand.h"
 
 
 static inline std::string generate_name(const std::string& prefix = "tensor"){
@@ -95,28 +95,7 @@ Tensor::Tensor(float value ,std::vector<int> shape,DType dtype,bool requires_gra
 }
 
 
-Tensor Tensor::operator+(const Tensor& other) const{
-    return add(*this,other);
-}
-Tensor Tensor::operator*(const Tensor& other) const{
-    return mul(*this,other);
-}
 
-Tensor Tensor::operator-( const Tensor& B) {
-    return sub(*this, B);
-}
-
-
-Tensor Tensor::operator-(float scalar) {
-    // 将标量转换为Tensor然后相减
-    Tensor scalar_tensor = Tensor(scalar, storage_->shape_, storage_->dtype_);
-    return sub(*this, scalar_tensor);
-}
-
-
-Tensor& Tensor::operator-=( const Tensor& B) {
-    return sub_(*this, B);
-}
 
 void Tensor::zero_grad(){
     assert(storage_->requires_grad_);

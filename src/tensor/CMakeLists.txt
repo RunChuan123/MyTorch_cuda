@@ -1,12 +1,19 @@
-add_library(tensor)
-
-target_sources(tensor
-PUBLIC
-tensor.cu
+add_library(tensor STATIC
+    tensor.cu
 )
-target_include_directories(tensor ${CMAKE_CURRENT_SOURCE_DIR})
 
-target_link_directories(tensor
-PUBLIC 
-utils
+set_target_properties(tensor PROPERTIES
+    CUDA_STANDARD 17
+    CUDA_STANDARD_REQUIRED ON
+    CUDA_SEPARABLE_COMPILATION ON
+)
+
+target_include_directories(tensor
+    PUBLIC
+        ${PROJECT_SOURCE_DIR}/src/tensor
+)
+
+target_link_libraries(tensor
+    PUBLIC
+        utils
 )

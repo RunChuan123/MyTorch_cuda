@@ -1,14 +1,21 @@
-add_library(ops)
-
-target_sources(ops
-PUBLIC
-scalarops.cu
-multiple.cu
+add_library(ops STATIC
+    scalarops.cu
+    multiple.cu
 )
 
-target_include_directories(ops ${CMAKE_CURRENT_SOURCE_DIR})
+set_target_properties(ops PROPERTIES
+    CUDA_STANDARD 17
+    CUDA_STANDARD_REQUIRED ON
+    CUDA_SEPARABLE_COMPILATION ON
+)
 
-target_link_directories(ops
-PUBLIC 
-tensor
+target_include_directories(ops
+    PUBLIC
+        ${CMAKE_CURRENT_SOURCE_DIR}
+)
+
+target_link_libraries(ops
+    PUBLIC
+        tensor
+        utils
 )

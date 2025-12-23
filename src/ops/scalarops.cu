@@ -1,7 +1,7 @@
 #include <cassert>
 #include "scalarops.cuh"
 
-#include "src/utils/cuda_utils.cuh"
+#include "cuda_utils.cuh"
 
 
 template<typename T>
@@ -69,7 +69,7 @@ __global__ void accumulate128_kernel(T* grad, const T* grad_out, int size)
     }
 
     for(int i=0;i<pack && offset+i<size;i++){
-        grad[offset + i] += grad_out[offset + i];
+        grad[offset + i] = grad[offset + i]+grad_out[offset + i];
     }
 }
 

@@ -1,23 +1,23 @@
 #pragma once
-#include <cuda_fp16.h>
-#include <cuda_bf16.h>
+// #include <cuda_fp16.h>
+// #include <cuda_bf16.h>
 #include <iostream>
 
 
 
 enum class DType{
     Float32,
-    Float16,   // half
+    // Float16,   // half
     Int32,
-    BFloat16,  // nv_bfloat16
+    // BFloat16,  // nv_bfloat16
 };
 
 inline std::ostream& operator<<(std::ostream& os, DType dtype) {
     switch (dtype) {
         case DType::Float32: return os << "Float32";
-        case DType::Float16: return os << "Float16";
+        // case DType::Float16: return os << "Float16";
         case DType::Int32: return os << "Int32";
-        case DType::BFloat16: return os << "BFloat16";
+        // case DType::BFloat16: return os << "BFloat16";
         default: return os << "Unknown";
     }
 }
@@ -26,10 +26,10 @@ inline std::ostream& operator<<(std::ostream& os, DType dtype) {
 inline size_t dtype_size(DType type){
     switch (type)
     {
-    case DType::Float16: return 2;
+    // case DType::Float16: return 2;
     case DType::Float32: return 4;
     case DType::Int32: return 4;
-    case DType::BFloat16: return 2;
+    // case DType::BFloat16: return 2;
     
     default:
         return 0;
@@ -40,11 +40,6 @@ inline size_t dtype_size(DType type){
 #define DISPATCH_DTYPE(dtype,scalar_t , ...)\
 switch (dtype)\
 {\
-    case DType::Float16:{\
-        using scalar_t = half;\
-        __VA_ARGS__;\
-        break;\
-    }\
     case DType::Float32:{\
         using scalar_t = float;\
         __VA_ARGS__;\
@@ -55,15 +50,20 @@ switch (dtype)\
         __VA_ARGS__;\
         break;\
     }\
-    case DType::BFloat16:{\
-        using scalar_t = __nv_bfloat16;\
-        __VA_ARGS__;\
-        break;\
-    }\
     default:\
         assert(false);\
 }\
 
+    // case DType::BFloat16:{\
+    //     using scalar_t = __nv_bfloat16;\
+    //     __VA_ARGS__;\
+    //     break;\
+    // }\
+    // case DType::Float16:{\
+    //     using scalar_t = half;\
+    //     __VA_ARGS__;\
+    //     break;\
+    // }
 
 template <typename ElementType>
 struct alignas(16) Packed128{
@@ -128,10 +128,10 @@ __device__ void store128cg(ElementType* target,Packed128<ElementType> value){
     __stcg(reinterpret_cast<int4*>(target),value.get_bits());
 }
 
-#define floatX half
+// #define floatX half
 
 typedef Packed128<float> f128;
-typedef Packed128<floatX> x128;
+// typedef Packed128<floatX> x128;
 
 
 template<typename scalar_t>
@@ -140,20 +140,8 @@ using pack128 = Packed128<scalar_t>;
 
 #define DISPATCH_DTYPE_AND_PACK(dtype,scalar_t,vec_t,...)\
 switch(dtype){\
-    case DType::Float16:{\
-        using scalar_t = half;\
-        using vec_t = pack128<scalar_t>;\
-        __VA_ARGS__\
-        break;\
-    }\
     case DType::Float32:{\
         using scalar_t = float;\
-        using vec_t = pack128<scalar_t>;\
-        __VA_ARGS__\
-        break;\
-    }\
-    case DType::BFloat16:{\
-        using scalar_t = __nv_bfloat16;\
         using vec_t = pack128<scalar_t>;\
         __VA_ARGS__\
         break;\
@@ -166,3 +154,16 @@ switch(dtype){\
     }\
     default:assert(false);\
 } 
+
+    // case DType::Float16:{\
+    //     using scalar_t = half;\
+    //     using vec_t = pack128<scalar_t>;\
+    //     __VA_ARGS__\
+    //     break;\
+    // }
+     // case DType::BFloat16:{\
+    //     using scalar_t = __nv_bfloat16;\
+    //     using vec_t = pack128<scalar_t>;\
+    //     __VA_ARGS__\
+    //     break;\
+    // }

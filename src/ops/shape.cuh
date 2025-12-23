@@ -1,5 +1,5 @@
 #pragma once
-#include "../tensor/tensor.cuh"
+#include "tensor.cuh"
 #include <vector>
 
 Tensor reshape(const Tensor& A,const std::vector<int>& new_shape){
