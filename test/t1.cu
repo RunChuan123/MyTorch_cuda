@@ -71,14 +71,15 @@ int main(){
     cudaMemcpyAsync(d_data_2,h_data_2,sizeof(float) * N * K,cudaMemcpyHostToDevice,s0);
  
  
-    dim3 block(16,16);
-    dim3 grid(CEIL_DIV(N,block.y),CEIL_DIV(M,block.x));
+    
     cudaEventRecord(start,s0);
     constexpr int SM = 16;
     constexpr int SN = 16;
     
     constexpr int SK = 16;
-    mat_maul_v2<float,SM,SN,SK><<<grid,block,0,s0>>>(d_data_1,d_data_2,d_data_3,M,N,K);
+    dim3 block(8,8);
+    dim3 grid(CEIL_DIV(N,SN),CEIL_DIV(M,SM));
+    mat_maul_v4<float,SM,SN,SK><<<grid,block,0,s0>>>(d_data_1,d_data_2,d_data_3,M,N,K);
     cudaEventRecord(end,s0);
     cudaEventSynchronize(end);
 
